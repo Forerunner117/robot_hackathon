@@ -1,0 +1,65 @@
+<!doctype html>
+
+<title>Hexagon Code</title>
+
+{% if feet %}
+<h1>The code below will make your robot adjust course upon hitting an object.<br>
+	It will reverse {{ feet }} feet before attempting a new trajectory...</h1>
+  <p>
+symbol leftWheel = B.4<br>
+symbol rightWheel = B.6<br>
+symbol LEDleft = B.1<br>
+symbol LEDright = B.3<br>
+symbol leftBumper = pinC.1<br>
+symbol rightBumper = pinC.3<br>
+symbol counter = b1<br>
+symbol pin = pinC.6<br>
+
+main:<br>
+do <br>
+	gosub move_forward<br>
+	if leftBumper = 1 or rightBumper = 1 then gosub move_back<br>
+	if pin = 1 then gosub stopp<br>
+loop<br>
+<br>
+	goto main<br>
+	<br>
+	end<br>
+	<br>
+move_forward:<br>
+	high leftWheel<br>
+	high rightWheel<br>
+	return<br>
+	<br>
+move_back:<br>
+	low leftWheel<br>
+	low rightWheel<br>
+	gosub flash	<br>
+	high B.5<br>
+	high B.7<br>
+	pause 1000<br>
+	low B.5<br>
+	pause 510<br>
+	low B.7<br>
+	return<br>
+	<br>
+flash:<br>
+	for counter = 1 to 5<br>
+		high LEDright	<br>
+		high LEDleft<br>
+		pause 100	<br>
+		low LEDright<br>
+		low LEDleft<br>
+		pause 100<br>
+	next counter<br>
+<br>
+	return<br>
+
+stopp:<br>
+	low leftWheel<br>
+	low rightWheel<br>
+
+
+{% else %}
+  <h1>Hello!</h1>
+{% endif %}
